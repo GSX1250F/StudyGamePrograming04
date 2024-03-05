@@ -161,6 +161,36 @@ void Game::UpdateGame()
 	{
 		delete actor;
 	}
+
+
+	// For Exercise 4.2
+	// Update pieces pos
+	int ycnt = 0;
+	int rcnt = 0;
+	for (int i = 0; i < 6; i++)
+	{
+		for (int j = 0; j < 7; j++)
+		{
+			//Vector2 pos(j * 128.0f + 128.0f, i * 128.0f + 64.0f);
+			if (mBoardState.mBoard[i][j] == BoardState::Yellow)
+			{
+				yellowPieces[ycnt]->SetPosition(Vector2 (j * 128.0f + 128.0f, i * 128.0f + 64.0f));
+				yellowPieces[ycnt]->SetState(Actor::EActive);
+				ycnt++;
+				//DrawTexture(GetTexture("Assets/YellowPiece.png"), pos, Vector2(128.0f, 128.0f));
+			}
+			else if (mBoardState.mBoard[i][j] == BoardState::Red)
+			{
+				redPieces[rcnt]->SetPosition(Vector2(j * 128.0f + 128.0f, i * 128.0f + 64.0f));
+				redPieces[rcnt]->SetState(Actor::EActive);
+				rcnt++;
+				//DrawTexture(GetTexture("Assets/RedPiece.png"), pos, Vector2(128.0f, 128.0f));
+			}
+		}
+	}
+	
+	
+
 }
 
 void Game::GenerateOutput()
@@ -174,12 +204,12 @@ void Game::GenerateOutput()
 		sprite->Draw(mRenderer);
 	}
 
-	
 	// For Exercise 4.2
 	// Draw background
-	DrawTexture(GetTexture("Assets/Board.png"), Vector2(512.0f, 384.0f),Vector2(896.0f, 768.0f));
+	// DrawTexture(GetTexture("Assets/Board.png"), Vector2(512.0f, 384.0f),Vector2(896.0f, 768.0f));
 
 	// Draw pieces
+	/*
 	for (int i = 0; i < 6; i++)
 	{
 		for (int j = 0; j < 7; j++)
@@ -187,14 +217,15 @@ void Game::GenerateOutput()
 			Vector2 pos(j * 128.0f + 128.0f, i * 128.0f + 64.0f);
 			if (mBoardState.mBoard[i][j] == BoardState::Yellow)
 			{
-				DrawTexture(yellowPiece, pos,Vector2(128.0f, 128.0f));
+				DrawTexture(GetTexture("Assets/YellowPiece.png"), pos, Vector2(128.0f, 128.0f));
 			}
 			else if (mBoardState.mBoard[i][j] == BoardState::Red)
 			{
-				DrawTexture(redPiece, pos,Vector2(128.0f, 128.0f));
+				DrawTexture(GetTexture("Assets/RedPiece.png"), pos, Vector2(128.0f, 128.0f));
 			}
 		}
 	}
+	*/
 	
 
 	SDL_RenderPresent(mRenderer);
@@ -202,23 +233,32 @@ void Game::GenerateOutput()
 
 void Game::LoadData()
 {
-	const int numPieces = 6*7;
 	
-	yellowPiece = GetTexture("Assets/YellowPiece.png");
-	redPiece = GetTexture("Assets/RedPiece.png");
+	// Boardを作成
+	Actor* board = new Actor(this);
+	board->SetPosition(Vector2(512.0f, 384.0f));
+	SpriteComponent* sc = new SpriteComponent(board, 10);
+	sc->SetTexture(GetTexture("Assets/Board.png"));
+	
+	
+	// Yellow PieceとRed Pieceを作成
+	// それぞれ、最大21個。k手目のアクターを[k]として配列化
+	const int numPieces = 6 * 7 / 2;
 	for (int i = 0; i < numPieces; i++)
 	{
 		Actor* piece = new Actor(this);
-		SpriteComponent* sc = new SpriteComponent(piece, 10);
-		sc->SetTexture(yellowPiece);
+		piece->SetState(Actor::EPaused);
+		SpriteComponent* sc = new SpriteComponent(piece, 100);
+		sc->SetTexture(GetTexture("Assets/YellowPiece.png"));
 		yellowPieces.emplace_back(piece);
 	}
 	
 	for (int i = 0; i < numPieces; i++)
 	{
 		Actor* piece = new Actor(this);
-		SpriteComponent* sc = new SpriteComponent(piece);
-		sc->SetTexture(redPiece);
+		piece->SetState(Actor::EPaused); 
+		SpriteComponent* sc = new SpriteComponent(piece, 100);
+		sc->SetTexture(GetTexture("Assets/RedPiece.png"));
 		redPieces.emplace_back(piece);
 	}
 	

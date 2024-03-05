@@ -61,11 +61,12 @@ private:
 	BoardState mBoardState;
 
 	// textures
-	SDL_Texture* board;
-	SDL_Texture* yellowPiece;
-	SDL_Texture* redPiece;
+	//SDL_Texture* board;
+	//SDL_Texture* yellowPiece;
+	//SDL_Texture* redPiece;
 
 	// Game-specific
+	class Actor* board;
 	std::vector<class Actor*> yellowPieces;
 	std::vector<class Actor*> redPieces;
 };
