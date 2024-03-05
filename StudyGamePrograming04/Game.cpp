@@ -202,22 +202,26 @@ void Game::GenerateOutput()
 
 void Game::LoadData()
 {
-	Actor* test = new Actor(this);
-	
-
 	const int numPieces = 6*7;
-
 	
-	
-
+	yellowPiece = GetTexture("Assets/YellowPiece.png");
+	redPiece = GetTexture("Assets/RedPiece.png");
 	for (int i = 0; i < numPieces; i++)
 	{
 		Actor* piece = new Actor(this);
-		piece->SetState(Actor::State::EDead);
+		SpriteComponent* sc = new SpriteComponent(piece, 10);
+		sc->SetTexture(yellowPiece);
 		yellowPieces.emplace_back(piece);
-		
+	}
+	
+	for (int i = 0; i < numPieces; i++)
+	{
+		Actor* piece = new Actor(this);
+		SpriteComponent* sc = new SpriteComponent(piece);
+		sc->SetTexture(redPiece);
 		redPieces.emplace_back(piece);
 	}
+	
 	
 }
 
