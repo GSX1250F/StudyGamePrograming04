@@ -174,6 +174,7 @@ void Game::GenerateOutput()
 		sprite->Draw(mRenderer);
 	}
 
+	
 	// For Exercise 4.2
 	// Draw background
 	DrawTexture(GetTexture("Assets/Board.png"), Vector2(512.0f, 384.0f),Vector2(896.0f, 768.0f));
@@ -186,21 +187,38 @@ void Game::GenerateOutput()
 			Vector2 pos(j * 128.0f + 128.0f, i * 128.0f + 64.0f);
 			if (mBoardState.mBoard[i][j] == BoardState::Yellow)
 			{
-				DrawTexture(GetTexture("Assets/YellowPiece.png"), pos,Vector2(128.0f, 128.0f));
+				DrawTexture(yellowPiece, pos,Vector2(128.0f, 128.0f));
 			}
 			else if (mBoardState.mBoard[i][j] == BoardState::Red)
 			{
-				DrawTexture(GetTexture("Assets/RedPiece.png"), pos,Vector2(128.0f, 128.0f));
+				DrawTexture(redPiece, pos,Vector2(128.0f, 128.0f));
 			}
 		}
 	}
+	
 
 	SDL_RenderPresent(mRenderer);
 }
 
 void Game::LoadData()
 {
+	Actor* test = new Actor(this);
+	
 
+	const int numPieces = 6*7;
+
+	
+	
+
+	for (int i = 0; i < numPieces; i++)
+	{
+		Actor* piece = new Actor(this);
+		piece->SetState(Actor::State::EDead);
+		yellowPieces.emplace_back(piece);
+		
+		redPieces.emplace_back(piece);
+	}
+	
 }
 
 void Game::UnloadData()

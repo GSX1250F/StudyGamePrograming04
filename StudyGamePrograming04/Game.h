@@ -14,6 +14,7 @@
 #include "Math.h"
 #include "Board.h"
 
+
 class Game
 {
 public:
@@ -58,4 +59,13 @@ private:
 
 	// Game-specific
 	BoardState mBoardState;
+
+	// textures
+	SDL_Texture* board;
+	SDL_Texture* yellowPiece;
+	SDL_Texture* redPiece;
+
+	// Game-specific
+	std::vector<class Actor*> yellowPieces;
+	std::vector<class Actor*> redPieces;
 };
