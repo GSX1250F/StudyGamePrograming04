@@ -171,17 +171,17 @@ void Game::UpdateGame()
 	{
 		for (int j = 0; j < 7; j++)
 		{
-			//Vector2 pos(j * 128.0f + 128.0f, i * 128.0f + 64.0f);
+			Vector2 pos(j * 128.0f + 128.0f, i * 128.0f + 64.0f);
 			if (mBoardState.mBoard[i][j] == BoardState::Yellow)
 			{
-				yellowPieces[ycnt]->SetPosition(Vector2 (j * 128.0f + 128.0f, i * 128.0f + 64.0f));
+				yellowPieces[ycnt]->SetPosition(pos);
 				yellowPieces[ycnt]->SetState(Actor::EActive);
 				ycnt++;
 				//DrawTexture(GetTexture("Assets/YellowPiece.png"), pos, Vector2(128.0f, 128.0f));
 			}
 			else if (mBoardState.mBoard[i][j] == BoardState::Red)
 			{
-				redPieces[rcnt]->SetPosition(Vector2(j * 128.0f + 128.0f, i * 128.0f + 64.0f));
+				redPieces[rcnt]->SetPosition(pos);
 				redPieces[rcnt]->SetState(Actor::EActive);
 				rcnt++;
 				//DrawTexture(GetTexture("Assets/RedPiece.png"), pos, Vector2(128.0f, 128.0f));
@@ -243,7 +243,7 @@ void Game::LoadData()
 	
 	// Yellow PieceとRed Pieceを作成
 	// それぞれ、最大21個。k手目のアクターを[k]として配列化
-	const int numPieces = 6 * 7 / 2;
+	const int numPieces = 21;
 	for (int i = 0; i < numPieces; i++)
 	{
 		Actor* piece = new Actor(this);
